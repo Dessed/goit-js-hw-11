@@ -1,45 +1,26 @@
-import './css/styles.css';
-import { fetchCountries } from './fetchCountries';
-export {renderCountriesData};
-export {showsListCountries};
-var debounce = require('lodash.debounce');
+const axios = require('axios').default;
 
-const input = document.getElementById('search-box');
-      list = document.querySelector('.country-list');
-      infoCountry = document.querySelector('.country-info');
+// const form = document.getElementById('search-form');
+const formBtn = document.querySelector('.search-form button');
+const form = document.querySelector('.search-form')
 
-const DEBOUNCE_DELAY = 300;
+const API_KEY = '30147177-aa989cd4308968caefabd5d9f'; 
 
-const debounceSearchCountries = debounce(searchNameCountries, DEBOUNCE_DELAY);
+form.addEventListener('submit', getUser);
 
-input.addEventListener('keydown', debounceSearchCountries);
+async function getUser(e) {
+  e.preventDefault();
+  let search = e.currentTarget.elements.searchQuery.value;
 
-function searchNameCountries (e) {
-  let name = e.target.value.trim();
-  fetchCountries(name);
+  try {
+    const response = await axios.
+    get('https://pixabay.com/api/?key='+API_KEY+'&q='+search+'&image_type=photo&orientation=horizontal&safesearch=true');
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-function showsListCountries (countries) {
-  list.style.listStyle = 'none';
-  const markup = countries.map(({name, flags}) => {
-    return `<li>
-      <p> <img src="${flags.svg} "width=30px"/>  <b "font-size=40px"> ${name.official}  </b></p>
-      </li>`
-  }).join("");
-  list.innerHTML = markup;
-}
-
-function renderCountriesData(countries) {
-  infoCountry.style.listStyle = 'none';
-
-  const markup = countries.map(({name, capital, population, languages, flags}) => {
-    return `<li style="font-size:40px">
-      <p style="margin-top:10px"> <img src="${flags.svg} "width=30px" style="padding-bottom:4px"/> 
-      <b>${name.official}</b></p></li>
-    
-      <li><p><b>Capital</b>: ${capital}</p></li>
-      <li><p><b>Population</b>: ${population}</p></li>
-      <li><p><b>Languages</b>: ${Object.values(languages).join(', ')}</p></li>`
-  }).join("");
-    infoCountry.innerHTML = markup;
-}
+console.log(getUser);
+console.log(getUser(response));
