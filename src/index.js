@@ -1,4 +1,6 @@
 const axios = require('axios').default;
+import SimpleLightbox from "simplelightbox";
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import ImageSearch from './image-search';
 
 const form = document.querySelector('.search-form');
@@ -20,31 +22,36 @@ async function onSearch(e) {
 };
 
 async function onLoadMore () {
-  imageSearch.axiosSearchPhoto().then(addMarkupCreation);
+  imageSearch.axiosSearchPhoto().then(appendMarkupCreation);
 };
 
 function addMarkupCreation (hits) {
   gallery.innerHTML = markupСreation (hits);
-  // gallery.insertAdjacentElement('beforeend', markupСreation (hits));
+
 };
+
+function appendMarkupCreation (hits) {
+  gallery.innerHTML = markupСreation (hits);
+  // gallery.insertAdjacentElement('beforeend', markupСreation (hits));
+}
 
 function markupСreation (hits) {
   return hits.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => {
     return `
     <div class="photo-card">
-        <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+        <img src="${webformatURL}" alt="${tags}" loading="lazy"/>
       <div class="info">
         <p class="info-item">
-          <b>${likes}</b>
+          <b>Likes<br> ${likes}</b>
         </p>
         <p class="info-item">
-          <b>${views}</b>
+          <b>Views<br> ${views}</b>
         </p>
         <p class="info-item">
-          <b>${comments}</b>
+          <b>Comments<br> ${comments}</b>
         </p>
         <p class="info-item">
-          <b>${downloads}</b>
+          <b>Downloads<br> ${downloads}</b>
         </p>
       </div>
     </div>`
