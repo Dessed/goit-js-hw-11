@@ -1,26 +1,53 @@
 const axios = require('axios').default;
+import ImageSearch from './image-search';
 
-// const form = document.getElementById('search-form');
-const formBtn = document.querySelector('.search-form button');
-const form = document.querySelector('.search-form')
+const form = document.querySelector('.search-form');
+const loadMore = document.querySelector('.load-more');
+const gallery = document.querySelector('.gallery');
 
-const API_KEY = '30147177-aa989cd4308968caefabd5d9f'; 
+const imageSearch = new ImageSearch();
+console.log(imageSearch);
 
-form.addEventListener('submit', getUser);
+form.addEventListener('submit', onSearch);
+loadMore.addEventListener('click', onLoadMore);
 
-async function getUser(e) {
+async function onSearch(e) {
   e.preventDefault();
-  let search = e.currentTarget.elements.searchQuery.value;
 
-  try {
-    const response = await axios.
-    get('https://pixabay.com/api/?key='+API_KEY+'&q='+search+'&image_type=photo&orientation=horizontal&safesearch=true');
-    console.log(response);
-    return response;
-  } catch (error) {
-    console.error(error);
-  }
-}
+  imageSearch.searchQuery = e.currentTarget.elements.searchQuery.value;
+  imageSearch.resetPage();
+  imageSearch.axiosSearchPhoto().then(addMarkupCreation);
+};
 
-console.log(getUser);
-console.log(getUser(response));
+async function onLoadMore () {
+  imageSearch.axiosSearchPhoto().then(addMarkupCreation);
+};
+
+function addMarkupCreation (hits) {
+  gallery.innerHTML = markupСreation (hits);
+  // gallery.insertAdjacentElement('beforeend', markupСreation (hits));
+};
+
+function markupСreation (hits) {
+  return hits.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => {
+    return `
+    <div class="photo-card">
+        <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+      <div class="info">
+        <p class="info-item">
+          <b>${likes}</b>
+        </p>
+        <p class="info-item">
+          <b>${views}</b>
+        </p>
+        <p class="info-item">
+          <b>${comments}</b>
+        </p>
+        <p class="info-item">
+          <b>${downloads}</b>
+        </p>
+      </div>
+    </div>`
+  }).join('');
+};
+
