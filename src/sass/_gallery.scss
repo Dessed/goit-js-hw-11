@@ -6,10 +6,11 @@
 
 .photo-card {
     width: calc(100% / 4 - 20px);
-    
     margin: 10px;
+    border: 1px solid #EEEEEE;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06), 1px 4px 6px rgba(0, 0, 0, 0.16);
 
-    & img {
+    img {
         width: 100%;
         height: 250px;
     }

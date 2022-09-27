@@ -2,13 +2,17 @@ const axios = require('axios').default;
 import SimpleLightbox from "simplelightbox";
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import ImageSearch from './image-search';
+import LoadMoreBtn from './load-more-btn';
 
 const form = document.querySelector('.search-form');
 const loadMore = document.querySelector('.load-more');
 const gallery = document.querySelector('.gallery');
 
 const imageSearch = new ImageSearch();
-console.log(imageSearch);
+// const loadMoreBtn = new LoadMoreBtn({
+//   selector: '[data-action="load-more"]',
+//   hidden: true,
+// });
 
 form.addEventListener('submit', onSearch);
 loadMore.addEventListener('click', onLoadMore);
@@ -26,13 +30,12 @@ async function onLoadMore () {
 };
 
 function addMarkupCreation (hits) {
-  gallery.innerHTML = markupСreation (hits);
-
+  gallery.innerHTML = '';
+  gallery.insertAdjacentHTML('beforeend', markupСreation (hits));
 };
 
 function appendMarkupCreation (hits) {
-  gallery.innerHTML = markupСreation (hits);
-  // gallery.insertAdjacentElement('beforeend', markupСreation (hits));
+  gallery.insertAdjacentHTML('beforeend', markupСreation (hits));
 }
 
 function markupСreation (hits) {

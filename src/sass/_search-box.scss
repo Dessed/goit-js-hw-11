@@ -1,0 +1,29 @@
+.search-form {
+    width: 100%;
+    text-align: center;
+    padding: 5px 0 12px 0;
+    background-color: rgb(86, 38, 243);
+    
+    
+
+    input,  button {
+    border: none;
+    outline: none;
+    border-radius: 3px;
+  }
+    input {
+    width: 400px;
+    height: 40px;
+    padding-left: 15px;
+  }
+    button {
+    height: 26px;
+    width: 26px;
+    position: relative;
+    top: 8px;
+    right: 40px;
+    background-image: url('../images/search.svg');
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+}
