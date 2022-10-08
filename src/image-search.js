@@ -12,10 +12,9 @@ export default class ImageSearch {
             const response = await axios.
             get(`https://pixabay.com/api/?key=${this.KEY_API}&q=${this.search}
             &image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`);
-            // console.log(response);
             const data = this.increase();
- 
-            return response.data.hits;
+            console.log(response);
+            return response.data;
           } catch (error) {
             console.error(error);
           }

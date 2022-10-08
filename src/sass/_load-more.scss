@@ -1,5 +1,5 @@
 .load-more {
-    display: flex;
+    display: block;
     margin: 20px auto;
     padding: 5px 10px;
     color: white;
@@ -8,4 +8,11 @@
     border-radius: 4px;
     object-fit: cover;
     
+   
+    &.is-hidden {
+        display: none;
+    }
 }
+
+
+  
